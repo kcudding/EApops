@@ -6,4 +6,6 @@ Here's a workflow example using some analysis of the EAS survey data to estimate
 3. storing images for use in EAforum posts in our on repos
 
 
-The source is a .Rmd document, rendered as a github_document
+The source is a .Rmd document, rendered as a github_document (.md). The .md doc will be viewable in the rendered version here, and, with relatively small changes, can be posted on EAforum
+
+I've let all the code hang-out in this version
