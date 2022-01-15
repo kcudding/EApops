@@ -108,7 +108,7 @@ attrition rates by age, in order to get population growth rates. To
 complete these analyses, we will use the self-reported year of joining
 the EA community. We will generate an indepednent estimate of community
 growth rates for each survey based on the age structure (i.e., “age” in
-the EA community) of the responents. Therefore, in this approach, we
+the EA community) of the respondents. Therefore, in this approach, we
 need not assume there is similarity in response rates between different
 surveys. However, to do this analysis we do need to assume that the age
 distribution is stable from year to year. Therefore, these calculations

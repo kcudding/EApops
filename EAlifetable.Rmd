@@ -34,7 +34,7 @@ psurv=psurv[,c(6, 1:5)]
 #create table of values, save as image and include that image in doc
 #basic table
 xtab=kable(psurv, row.names=FALSE, format="html", table.attr = "style='width:40%;'",
-   caption="Number of EA survey responents with self-reported year of joining")
+   caption="Number of EA survey respondents with self-reported year of joining")
 #apply some formatting
 xtab3=kable_classic(xtab)
 #save high quality image (zoom) with white background ("flatly")
@@ -58,12 +58,12 @@ The first and simplest option is just to use the total number of respones from e
 We calculate community growth rates by assuming that future community size is a linear function of current community size, where the annual population growth rate, $\lambda=e^r$, can be estimated from the slope of a linear regression of ln community size, $N$ vs. time, $T$ (since ln$(N_t)=$ln$(N_0)+r$ $T$ for exponential growth). This is a common and inutitve method of estimating population growth rates (Caughley 1977); however, if even a small amount of the variance (>10%) actually arises from process error (real differences in community growth rates from year to year), then the confidence intervals will strongly underestimate the actual uncertainty ([Humbert et al. 2009](https://doi.org/10.1111/j.1600-0706.2009.17839.x)).
 
 ```{r, fig.caption="Regression to estimate population growth rates (assumes observation error dominates)"}
-# create dataframe with total number of responents per survey year
+# create dataframe with total number of respondents per survey year
 popsize=colSums(survey, na.rm=TRUE)
 popyear=as.numeric(substring(names(popsize), 4, 7))
 pop=data.frame(size=popsize, year=popyear)
 
-#regress ln responents vs year
+#regress ln respondents vs year
 popreg=lm(log(size)~year, data=pop)
 #summary(popreg)
 newx = seq(min(pop$year),max(pop$year),by = 0.05)
@@ -91,7 +91,7 @@ While the predicted annual population growth rate is $\lambda$=`r round(exp(popr
 regout=c(summary(popreg)$coefficients[2,], summary(popreg)$adj.r.squared)
 names(regout)[5]="adj.r.squared"
 regco=kable(t(regout), digits=2,format="html", table.attr = "style='width:60%;'",
-   caption="Linear regression for natural log of EA survey responents vs survey year (assumes observation error only)")
+   caption="Linear regression for natural log of EA survey respondents vs survey year (assumes observation error only)")
 save_kable(kable_classic(regco),file="regcoef.png", density=600, zoom = 1.25, bs_theme = "flatly")
 knitr::include_graphics("regcoef.png")
 ```
@@ -137,7 +137,7 @@ Obviously the best approach for this class of methods is to include both observa
 
 ### Static life table estimates of EA community growth
 
-We can also use static (or vertical) life table approaches ([Yusuf et al. 2014](https://doi.org/10.1007/978-94-007-6784-3_7)) to estimate attrition rates by age, in order to get population growth rates. To complete these analyses, we will use the self-reported year of joining the EA community. We will generate an indepednent estimate of community growth rates for each survey based on the age structure (i.e., "age" in the EA community) of the responents. Therefore, in this approach, we need not assume there is similarity in response rates between different surveys. However, to do this analysis we do need to assume that the age distribution is stable from year to year. Therefore, these calculations do rely on the assumption that the actual recruitment, attrition, and survey response rates are the same between years within a given survey report. 
+We can also use static (or vertical) life table approaches ([Yusuf et al. 2014](https://doi.org/10.1007/978-94-007-6784-3_7)) to estimate attrition rates by age, in order to get population growth rates. To complete these analyses, we will use the self-reported year of joining the EA community. We will generate an indepednent estimate of community growth rates for each survey based on the age structure (i.e., "age" in the EA community) of the respondents. Therefore, in this approach, we need not assume there is similarity in response rates between different surveys. However, to do this analysis we do need to assume that the age distribution is stable from year to year. Therefore, these calculations do rely on the assumption that the actual recruitment, attrition, and survey response rates are the same between years within a given survey report. 
 
 For this method we calculate the community growth rate as $\sum(l_x*m_x)$, where $l_x$ is the retention rate specific to each age class, and $m_x$ is the number of new recruits per current member of the EA community.
 
@@ -201,10 +201,10 @@ However, these estimated rates include observations which violate the assumption
 ```{r}
 par(mfrow=c(1,2))
 dplo=statictab[[1]]
-plot(dplo$years,dplo$num, pch=16, xlab="years as EA", type="b",ylab="# responents")
+plot(dplo$years,dplo$num, pch=16, xlab="years as EA", type="b",ylab="# respondents")
 legend("topright",colnames(ssurv)[1], pch=16, lty=1, col=1, bty="n" )
 dplo=statictab[[1]]
-plot(dplo$years,dplo$num, pch=16, xlab="years as EA", type="b",ylab="# responents",
+plot(dplo$years,dplo$num, pch=16, xlab="years as EA", type="b",ylab="# respondents",
      xlim=c(0,10), ylim=c(0,800))
 for (j in 2:5) {
   dplo=statictab[[j]]
@@ -258,7 +258,7 @@ a2slph = exp(var(log(grow), na.rm=TRUE))
 dplo=statictab[[1]]
 par(mfrow=c(1,2))
 
-#plot(dplo$years+2,dplo$num, pch=16, xlab="years #as EA", type="b",ylab="ln responents",log="y",
+#plot(dplo$years+2,dplo$num, pch=16, xlab="years #as EA", type="b",ylab="ln respondents",log="y",
 #     xlim=c(0,10), ylim=c(10,1000))
 #for (j in 2:5) {
 #  dplo=statictab[[j]]
@@ -310,7 +310,7 @@ If we assume that this variation is related to observation error, it makes sense
 egr=data.frame()
 staticpred=list()
 par(mar=c(7,7,2,2))
- plot(NA, xlab="years as EA", ylab="Number of responents\n (predicted=lines, acutal=points)", xlim=c(1,12), ylim=c(10,600))
+ plot(NA, xlab="years as EA", ylab="Number of respondents\n (predicted=lines, acutal=points)", xlim=c(1,12), ylim=c(10,600))
  regstats=data.frame()
  reglist=list()
 for (j in 1:5) {
